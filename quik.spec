@@ -2,7 +2,7 @@ Summary:	Disk bootstrap and installer for Linux/PPC
 Summary(pl):	Bootloader i instalator dla Linuksa na PPC
 Name:		quik
 Version:	2.0e
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://penguinppc.org/projects/quik/%{name}-%{version}.tar.gz
