@@ -7,6 +7,9 @@ License:	GPL
 Group:		Applications/System
 Source0:	http://penguinppc.org/projects/quik/%{name}-%{version}.tar.gz
 Patch0:		%{name}-install.patch
+Patch1:		%{name}-j-k-diff.patch
+Patch2:		%{name}-k-dac.patch
+Patch3:		%{name}-glibc-headers.patch
 URL:		http://penguinppc.org/projects/quik/
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	e2fsprogs-static
@@ -18,19 +21,22 @@ Obsoletes:	yaboot
 
 %description
 The quik package provides the functionality necessary for booting a
-Linux/PPC PowerMac or CHRP system from disk. It includes first and
-second stage disk bootstrap and a program for installing the first
+OldWorld Linux/PPC PowerMac or CHRP system from disk. It includes first 
+and second stage disk bootstrap and a program for installing the first 
 stage bootstrap on the root disk.
 
 %description -l pl
 Pakiet quik daje funkcjonalno¶æ niezbêdn± do uruchomienia z dysku
-systemu Linux na sprzêcie PPC PowerMac lub CHRP. Zawiera bootloader
-pierwszego i drugiego etapu oraz program do instalowania bootloadera
-pierwszego etapu na g³ównym dysku.
+systemu Linux na sprzêcie OldWorld PPC PowerMac lub CHRP. Zawiera 
+bootloader pierwszego i drugiego etapu oraz program do instalowania 
+bootloadera pierwszego etapu na g³ównym dysku.
 
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %{__make}
