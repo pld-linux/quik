@@ -1,0 +1,49 @@
+Tylko w quik-2.0e/first: first
+Tylko w quik-2.0e/first: first.b
+Tylko w quik-2.0e/first: first.o
+Tylko w quik-2.0e/quik: quik
+Tylko w quik-2.0e/second: cache.o
+Tylko w quik-2.0e/second: cfg.o
+Tylko w quik-2.0e/second: cmdline.o
+Tylko w quik-2.0e/second: crt0.o
+Tylko w quik-2.0e/second: ctype.o
+Tylko w quik-2.0e/second: disk.o
+Tylko w quik-2.0e/second: ffs.o
+Tylko w quik-2.0e/second: file.o
+diff -ur quik-2.0e.orig/second/main.c quik-2.0e/second/main.c
+--- quik-2.0e.orig/second/main.c	2003-12-23 19:54:18.000000000 +0100
++++ quik-2.0e/second/main.c	2003-12-23 19:55:19.000000000 +0100
+@@ -30,7 +30,7 @@
+ #include "quik.h"
+ #include <string.h>
+ #define __KERNEL__
+-#include <linux/elf.h>
++#include <elf.h>
+ #include <layout.h>
+ #ifdef BOOTINFO
+ #include <asm/machdep.h>
+Tylko w quik-2.0e/second: main.c~
+Tylko w quik-2.0e/second: main.o
+Tylko w quik-2.0e/second: malloc.o
+Tylko w quik-2.0e/second: nosys.o
+Tylko w quik-2.0e/second: printf.o
+Tylko w quik-2.0e/second: prom.o
+Tylko w quik-2.0e/second: second
+Tylko w quik-2.0e/second: second.b
+Tylko w quik-2.0e/second: setjmp.o
+Tylko w quik-2.0e/second: string.o
+Tylko w quik-2.0e/second: strtol.o
+Tylko w quik-2.0e/util: elfextract
+diff -ur quik-2.0e.orig/util/elfextract.c quik-2.0e/util/elfextract.c
+--- quik-2.0e.orig/util/elfextract.c	2003-12-23 19:54:18.000000000 +0100
++++ quik-2.0e/util/elfextract.c	2003-12-23 19:54:45.000000000 +0100
+@@ -5,7 +5,7 @@
+  */
+ #include <stdio.h>
+ #define __KERNEL__
+-#include <linux/elf.h>
++#include <elf.h>
+ 
+ FILE *fi, *fo;
+ char *ni, *no;
+Tylko w quik-2.0e/util: elfextract.c~
