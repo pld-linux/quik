@@ -1,0 +1,80 @@
+diff -urN quik-2.0/second/ffs.c quik-2.0k/second/ffs.c
+--- quik-2.0/second/ffs.c	1970-01-01 01:00:00.000000000 +0100
++++ quik-2.0k/second/ffs.c	2003-05-25 12:32:15.000000000 +0200
+@@ -0,0 +1,13 @@
++int ffs(int x)
++{
++        return __ilog2(x & -x) + 1;
++}
++/* Return the bit position of the most significant 1 bit in a word */
++int __ilog2(unsigned int x)
++{
++        int lz;
++                                                                                
++        asm ("cntlzw %0,%1" : "=r" (lz) : "r" (x));
++        return 31 - lz;
++}
++
+diff -urN quik-2.0/second/file.c quik-2.0k/second/file.c
+--- quik-2.0/second/file.c	2000-03-10 21:59:28.000000000 +0100
++++ quik-2.0k/second/file.c	2003-05-25 12:28:11.000000000 +0200
+@@ -23,11 +23,11 @@
+ #include <sys/types.h>
+ #include <errno.h>
+ #include "quik.h"
+-typedef int FILE;
+ #include <linux/ext2_fs.h>
+ #include <ext2fs/ext2fs.h>
+ #include <setjmp.h>
+ #include <asm/mac-part.h>
++#include <asm/bitops.h>
+ 
+ static errcode_t linux_open (const char *name, int flags, io_channel * channel);
+ static errcode_t linux_close (io_channel channel);
+@@ -167,7 +167,7 @@
+     return 1;
+ }
+ 
+-int sprintf (char *buf, char *fmt,...)
++int sprintf (char *buf, const char *fmt,...)
+ {
+     strcpy (buf, fmt);
+ }
+diff -urN quik-2.0/second/Makefile quik-2.0k/second/Makefile
+--- quik-2.0/second/Makefile	2003-05-25 13:19:41.000000000 +0200
++++ quik-2.0k/second/Makefile	2003-05-25 12:32:25.000000000 +0200
+@@ -8,7 +8,7 @@
+ 
+ OBJS =	crt0.o printf.o malloc.o main.o cmdline.o disk.o file.o \
+ 	cfg.o strtol.o prom.o cache.o string.o setjmp.o ctype.o \
+-	nosys.o 
++	nosys.o  ffs.o
+ 
+ all: second.b
+ 
+diff -urN quik-2.0/second/printf.c quik-2.0k/second/printf.c
+--- quik-2.0/second/printf.c	2000-03-10 21:59:28.000000000 +0100
++++ quik-2.0k/second/printf.c	2003-05-25 12:22:15.000000000 +0200
+@@ -27,6 +27,13 @@
+  * Only %c %s %u %d (==%u) %o %x %D %O are recognized.
+  */
+ 
++void puts (char *s) {
++
++   while(*s) 
++	putchar(*s++);
++
++}
++
+ void printf (char *fmt,...)
+ {
+     va_list x1;
+diff -urN quik-2.0/util/Makefile quik-2.0k/util/Makefile
+--- quik-2.0/util/Makefile	2000-03-10 21:59:28.000000000 +0100
++++ quik-2.0k/util/Makefile	2003-05-25 12:37:23.000000000 +0200
+@@ -1,4 +1,4 @@
+-CFLAGS=	-O2
++CFLAGS=	-O2 -static
+ 
+ all:	elfextract
+ 
