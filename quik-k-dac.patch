@@ -1,0 +1,77 @@
+--- quik-2.0/quik/quik.c.orig	Mon Feb 24 23:50:42 2003
++++ quik-2.0/quik/quik.c	Sun Mar  2 12:07:12 2003
+@@ -47,6 +47,9 @@
+ #define HDC_MAJOR	22
+ #define HDE_MAJOR	33
+ #define HDG_MAJOR	34
++#define DAC960_MAJOR	48	/* Major dev. no. for 1st DAC960 card */
++#define DAC960_SD0_MINOR 0	/* Minor dev. no. for 1st System Drive */
++#define DAC960_SD1_MINOR 8	/* Minor dev. no. for 2nd System Drive */
+ 
+ #ifndef MAJOR
+ #define MAJOR(dev)	((dev) >> 8)
+@@ -425,7 +428,7 @@
+     char spart[1024];
+     char buffer[1024];
+     int force = 0;
+-    int f, inc_name;
++    int f, inc_name, raid_dev;
+     extern int optind;
+     extern char *optarg;
+ 
+@@ -515,6 +518,7 @@
+     unit_shift = 6;
+     part_mask = 0x3f;
+     inc_name = 1;
++    raid_dev = 0;
+     switch (MAJOR(st1.st_dev)) {
+     case SD_MAJOR:
+ 	unit_shift = 4;
+@@ -533,6 +537,20 @@
+     case HDG_MAJOR:
+ 	basedev = "/dev/hdg";
+ 	break;
++    case DAC960_MAJOR:
++	raid_dev = 1;
++	switch (MINOR(st1.st_dev)) {
++	case DAC960_SD0_MINOR + 2:	/* BUG why don't we get the raw MINOR */
++	    basedev="/dev/rd/c0d0";
++	    break;
++	case DAC960_SD1_MINOR + 2:	/* BUG why don't we get the raw MINOR */
++	    basedev="/dev/rd/c0d1";
++	    break;	/* BUG the DAC960 can have more than 2 system drives */
++	default:
++	    if (verbose)
++	    fatal("We only support the 2 first system drives for now");
++	}
++	break;
+     default:
+ 	p = find_dev(st1.st_dev);
+ 	if (p == NULL)
+@@ -546,8 +564,13 @@
+     if (inc_name)
+ 	bootdev[7] += UNIT(st1.st_dev);
+     strcpy(spart, bootdev);
++    if (raid_dev)
++	strcat(spart,"p");
+     if (PART(st1.st_dev) != 0)
+-	sprintf(spart+8, "%d", PART(st1.st_dev));
++	if (raid_dev)
++	    sprintf(spart+strlen(spart), "%d", PART(st1.st_dev) & 7);
++        else
++	    sprintf(spart+strlen(spart), "%d", PART(st1.st_dev));
+ 
+     if (verbose)
+ 	printf("Second-stage loader is on %s\n", spart);
+@@ -576,7 +599,10 @@
+ 	strcpy(buffer, config_file);
+ 	config_file = resolve_to_dev(buffer, st2.st_dev);
+ 	if (inc_name)
+-            config_file_partno = PART(st2.st_dev);
++	    if (raid_dev)
++		config_file_partno = PART(st2.st_dev) & 7;
++            else
++		config_file_partno = PART(st2.st_dev);
+ 	else
+ 	    config_file_partno = 1;
+ 	if (verbose)
