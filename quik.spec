@@ -6,6 +6,7 @@ Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://penguinppc.org/projects/quik/%{name}-%{version}.tar.gz
+# Source0-md5:	ebc121539e3e39497e0fd772b12e7418
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-j-k-diff.patch
 Patch2:		%{name}-k-dac.patch
