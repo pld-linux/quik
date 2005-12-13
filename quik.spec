@@ -22,14 +22,14 @@ Obsoletes:	yaboot
 
 %description
 The quik package provides the functionality necessary for booting a
-OldWorld Linux/PPC PowerMac or CHRP system from disk. It includes first 
-and second stage disk bootstrap and a program for installing the first 
-stage bootstrap on the root disk.
+OldWorld Linux/PPC PowerMac or CHRP system from disk. It includes
+first and second stage disk bootstrap and a program for installing the
+first stage bootstrap on the root disk.
 
 %description -l pl
 Pakiet quik daje funkcjonalno¶æ niezbêdn± do uruchomienia z dysku
-systemu Linux na sprzêcie OldWorld PPC PowerMac lub CHRP. Zawiera 
-bootloader pierwszego i drugiego etapu oraz program do instalowania 
+systemu Linux na sprzêcie OldWorld PPC PowerMac lub CHRP. Zawiera
+bootloader pierwszego i drugiego etapu oraz program do instalowania
 bootloadera pierwszego etapu na g³ównym dysku.
 
 %prep
@@ -64,5 +64,5 @@ rm -rf $RPM_BUILD_ROOT
 /boot/first.b
 /boot/second.b
 /boot/second
-%attr(600,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/%{name}.conf
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}.conf
 %{_mandir}/man?/*
