@@ -1,5 +1,5 @@
 Summary:	Disk bootstrap and installer for Linux/PPC
-Summary(pl.UTF-8):   Bootloader i instalator dla Linuksa na PPC
+Summary(pl.UTF-8):	Bootloader i instalator dla Linuksa na PPC
 Name:		quik
 Version:	2.0e
 Release:	2
