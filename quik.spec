@@ -1,5 +1,5 @@
 Summary:	Disk bootstrap and installer for Linux/PPC
-Summary(pl):	Bootloader i instalator dla Linuksa na PPC
+Summary(pl.UTF-8):   Bootloader i instalator dla Linuksa na PPC
 Name:		quik
 Version:	2.0e
 Release:	2
@@ -26,11 +26,11 @@ OldWorld Linux/PPC PowerMac or CHRP system from disk. It includes
 first and second stage disk bootstrap and a program for installing the
 first stage bootstrap on the root disk.
 
-%description -l pl
-Pakiet quik daje funkcjonalno¶æ niezbêdn± do uruchomienia z dysku
-systemu Linux na sprzêcie OldWorld PPC PowerMac lub CHRP. Zawiera
+%description -l pl.UTF-8
+Pakiet quik daje funkcjonalnoÅ›Ä‡ niezbÄ™dnÄ… do uruchomienia z dysku
+systemu Linux na sprzÄ™cie OldWorld PPC PowerMac lub CHRP. Zawiera
 bootloader pierwszego i drugiego etapu oraz program do instalowania
-bootloadera pierwszego etapu na g³ównym dysku.
+bootloadera pierwszego etapu na gÅ‚Ã³wnym dysku.
 
 %prep
 %setup -q
